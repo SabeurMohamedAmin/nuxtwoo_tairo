@@ -1,0 +1,19 @@
+{
+  "panels": {
+    "language": {
+      "title": "Select Language"
+    }
+  },
+  "components": {
+    "toolbar": {
+      "search": "Search...",
+      "actions": {
+        "leads": "Leads",
+        "projects": "Projects",
+        "team": "Team",
+        "reports": "Reports",
+        "settings": "Settings"
+      }
+    }
+  }
+}
