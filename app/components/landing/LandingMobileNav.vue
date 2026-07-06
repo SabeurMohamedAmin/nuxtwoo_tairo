@@ -25,7 +25,7 @@ const navigation = ref([])
         <ul class="font-sans text-lg space-y-2">
           <li>
             <NuxtLink
-              to="/home"
+              to="/"
               class="text-muted-600 dark:text-muted-400 underline-offset-8"
               exact-active-class="underline font-medium text-muted-900! dark:text-white!"
             >
