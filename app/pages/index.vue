@@ -20,5 +20,7 @@ useHead({ title: 'CITADIUM – Streetwear & Sneakers' })
       <HomeEditorialBanners />
       <HomeNewsletter />
     </main>
+
+    <HomeFooter />
   </div>
 </template>

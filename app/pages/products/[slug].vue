@@ -176,5 +176,7 @@ function addToBag() {
       <ProductCarousel title="You may also like" :products="recommendations" />
       <PdpReviews />
     </main>
+
+    <HomeFooter />
   </div>
 </template>

@@ -112,5 +112,7 @@ const activeBrand = ref('All Brands')
         </div>
       </section>
     </main>
+
+    <HomeFooter />
   </div>
 </template>

@@ -182,5 +182,7 @@ const promoCode = ref('')
         </aside>
       </div>
     </main>
+
+    <HomeFooter />
   </div>
 </template>

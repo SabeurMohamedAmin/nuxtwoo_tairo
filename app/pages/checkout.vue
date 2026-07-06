@@ -225,5 +225,7 @@ function goBack() {
         </button>
       </div>
     </main>
+
+    <HomeFooter />
   </div>
 </template>
