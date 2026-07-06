@@ -62,12 +62,12 @@ function formatPrice(value: number) {
                 loading="lazy"
               />
             </div>
-            <BaseParagraph size="xs" weight="bold" class="mt-3 uppercase tracking-wide">
+            <BaseText size="xs" weight="bold" class="mt-3 uppercase tracking-wide">
               {{ sneaker.name }}
-            </BaseParagraph>
-            <BaseParagraph size="xs" class="mt-1 text-gray-600">
+            </BaseText>
+            <BaseText size="xs" class="mt-1 text-gray-600">
               {{ formatPrice(sneaker.price) }}
-            </BaseParagraph>
+            </BaseText>
           </div>
         </div>
 
