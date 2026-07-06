@@ -13,7 +13,7 @@ const hero = {
 </script>
 
 <template>
-  <section class="relative overflow-hidden pt-32 pb-16 lg:pt-40 lg:pb-24">
+  <section class="relative overflow-hidden pt-24 pb-16 lg:pb-24">
     <div class="mx-auto w-full max-w-7xl px-4">
       <div class="grid items-center gap-10 lg:grid-cols-2">
         <!-- Left: copy + calls to action -->
