@@ -1,14 +1,16 @@
 <script lang="ts" setup>
-
 definePageMeta({
   layout: 'landing',
 })
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center h-screen bg-red-50">
-    <h3 class="text-3xl font-bold underline text-blue-200">
-      Home Page
-    </h3>
+  <div class="flex min-h-screen flex-col items-center justify-center gap-4">
+    <BaseHeading as="h1" size="3xl" weight="bold" class="text-muted-800 dark:text-white">
+      Welcome to Tairo
+    </BaseHeading>
+    <BaseParagraph class="text-muted-500">
+      Your fresh start. Begin building from here.
+    </BaseParagraph>
   </div>
 </template>
