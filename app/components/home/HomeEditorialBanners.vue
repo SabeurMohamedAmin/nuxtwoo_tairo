@@ -53,18 +53,21 @@ const banners: Banner[] = [
           />
           <div class="absolute inset-0 bg-black/40" />
           <div class="absolute inset-0 flex flex-col justify-end gap-3 p-6">
-            <h3 class="text-2xl font-black uppercase leading-tight tracking-tight text-white">
+            <BaseHeading as="h3" size="2xl" weight="bold" class="uppercase leading-tight tracking-tight text-white">
               {{ banner.title }}
-            </h3>
-            <p class="text-sm text-white/80">
+            </BaseHeading>
+            <BaseParagraph size="sm" class="text-white/80">
               {{ banner.subtitle }}
-            </p>
-            <NuxtLink
+            </BaseParagraph>
+            <BaseButton
               :to="banner.to"
-              class="w-fit border border-white px-5 py-2 text-xs font-bold uppercase tracking-wide text-white hover:bg-white hover:text-black"
+              rounded="none"
+              variant="outline"
+              size="sm"
+              class="w-fit border-white! font-bold uppercase tracking-wide text-white! hover:bg-white! hover:text-black!"
             >
               {{ banner.cta }}
-            </NuxtLink>
+            </BaseButton>
           </div>
         </article>
       </div>
