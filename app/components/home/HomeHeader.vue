@@ -50,37 +50,55 @@ const { count } = useCart()
       </nav>
 
       <!-- Action icons -->
-      <div class="flex items-center gap-5">
-        <button
-          type="button"
-          class="text-black hover:opacity-70"
+      <div class="flex items-center gap-2">
+        <BaseButton
+          variant="ghost"
+          rounded="full"
+          size="icon-sm"
+          class="text-black!"
           aria-label="Search"
         >
           <Icon name="lucide:search" class="size-5" />
-        </button>
+        </BaseButton>
 
-        <NuxtLink to="/auth/login" class="text-black hover:opacity-70" aria-label="Account">
+        <BaseButton
+          to="/auth/login"
+          variant="ghost"
+          rounded="full"
+          size="icon-sm"
+          class="text-black!"
+          aria-label="Account"
+        >
           <Icon name="lucide:user" class="size-5" />
-        </NuxtLink>
+        </BaseButton>
 
-        <button
-          type="button"
-          class="text-black hover:opacity-70"
+        <BaseButton
+          variant="ghost"
+          rounded="full"
+          size="icon-sm"
+          class="text-black!"
           aria-label="Wishlist"
         >
           <Icon name="lucide:heart" class="size-5" />
-        </button>
+        </BaseButton>
 
         <!-- Cart with live count badge -->
-        <NuxtLink to="/cart" class="relative text-black hover:opacity-70" aria-label="Cart">
+        <BaseButton
+          to="/cart"
+          variant="ghost"
+          rounded="full"
+          size="icon-sm"
+          class="relative text-black!"
+          aria-label="Cart"
+        >
           <Icon name="lucide:shopping-bag" class="size-5" />
           <span
             v-if="count > 0"
-            class="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-red-600 text-[10px] font-bold text-white"
+            class="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full bg-red-600 text-[10px] font-bold text-white"
           >
             {{ count }}
           </span>
-        </NuxtLink>
+        </BaseButton>
       </div>
     </div>
   </header>
