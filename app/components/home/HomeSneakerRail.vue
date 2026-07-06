@@ -30,17 +30,20 @@ function formatPrice(value: number) {
 <template>
   <section class="py-12">
     <div class="mx-auto w-full max-w-7xl px-4">
-      <!-- Section header -->
-      <div class="mb-6 flex items-center justify-between">
-        <BaseHeading as="h2" size="2xl" weight="bold" class="uppercase tracking-tight">
-          Sneaker Rail
-        </BaseHeading>
-        <NuxtLink to="/products" class="text-xs font-bold uppercase tracking-wide hover:opacity-70">
-          View all
-        </NuxtLink>
-      </div>
+      <!-- TairoContentWrapper provides the header (left/right slots) + content layout -->
+      <TairoContentWrapper>
+        <template #left>
+          <BaseHeading as="h2" size="2xl" weight="bold" class="uppercase tracking-tight">
+            Sneaker Rail
+          </BaseHeading>
+        </template>
+        <template #right>
+          <NuxtLink to="/products" class="text-xs font-bold uppercase tracking-wide hover:opacity-70">
+            View all
+          </NuxtLink>
+        </template>
 
-      <div class="relative">
+        <div class="relative">
         <!-- Horizontal scroll carousel -->
         <div
           ref="rail"
@@ -77,7 +80,8 @@ function formatPrice(value: number) {
         >
           <Icon name="lucide:arrow-right" class="size-5" />
         </BaseButton>
-      </div>
+        </div>
+      </TairoContentWrapper>
     </div>
   </section>
 </template>
