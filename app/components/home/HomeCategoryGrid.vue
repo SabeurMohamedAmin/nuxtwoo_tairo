@@ -35,9 +35,9 @@ const categories: Category[] = [
               loading="lazy"
             />
           </div>
-          <span class="text-center text-xs font-bold uppercase tracking-wide">
+          <BaseParagraph size="xs" weight="bold" class="text-center uppercase tracking-wide">
             {{ category.label }}
-          </span>
+          </BaseParagraph>
         </NuxtLink>
       </div>
     </div>
