@@ -42,7 +42,8 @@
   },
   "pnpm": {
     "overrides": {
-      "@vueuse/core": "14.3.0"
+      "@vueuse/core": "14.3.0",
+      "@vueuse/shared": "14.3.0"
     }
   }
 }
