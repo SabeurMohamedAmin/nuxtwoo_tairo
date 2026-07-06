@@ -19,9 +19,9 @@ function onSubmit() {
         <BaseHeading as="h2" size="3xl" weight="bold" class="uppercase tracking-tight">
           Stay in the loop
         </BaseHeading>
-        <BaseParagraph size="sm" class="text-gray-600">
+        <BaseText size="sm" class="text-gray-600">
           Sign up and get 10% off your first order, plus early access to drops.
-        </BaseParagraph>
+        </BaseText>
 
         <form class="mt-2 flex max-w-md gap-2" @submit.prevent="onSubmit">
           <BaseInput
@@ -42,9 +42,9 @@ function onSubmit() {
           </BaseButton>
         </form>
 
-        <BaseParagraph v-if="submitted" size="sm" weight="medium" class="text-red-600">
+        <BaseText v-if="submitted" size="sm" weight="medium" class="text-red-600">
           Thanks for signing up!
-        </BaseParagraph>
+        </BaseText>
       </div>
     </div>
   </section>

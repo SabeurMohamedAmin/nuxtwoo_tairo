@@ -32,9 +32,9 @@ const hero = {
         >
           {{ hero.title }}
         </BaseHeading>
-        <BaseParagraph size="sm" weight="medium" class="mt-5 max-w-sm text-white">
+        <BaseText size="sm" weight="medium" class="mt-5 max-w-sm text-white">
           {{ hero.subtitle }}
-        </BaseParagraph>
+        </BaseText>
 
         <div class="mt-8 flex flex-wrap gap-3">
           <!-- Solid white button -->
