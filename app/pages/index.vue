@@ -6,6 +6,7 @@ definePageMeta({
 
 <template>
   <div class="flex min-h-screen flex-col items-center justify-center gap-4">
+    <h1>hello</h1>
     <BaseHeading as="h1" size="3xl" weight="bold" class="text-muted-800 dark:text-white">
       Welcome to Tairo
     </BaseHeading>
