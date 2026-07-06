@@ -12,7 +12,7 @@
 
             <TairoMenuItem>
               <TairoMenuLink as-child>
-                <NuxtLink to="/home" class="nav-link"> Documentation </NuxtLink>
+                <NuxtLink to="/" class="nav-link"> Documentation </NuxtLink>
               </TairoMenuLink>
             </TairoMenuItem>
 
