@@ -1,24 +1,39 @@
 <script setup lang="ts">
-  const isSearchOpen = useSearchOpen();
-  const isMobileOpen = useMobileNavOpen();
-  const isSwitcherOpen = useColorSwitcherOpen();
-  const metaKey = useMetaKey()
+// Floating navbar used on the landing/home pages.
+// Its look changes when the page is scrolled: `LandingLayout.vue` adds a
+// `.scrolled` class on the wrapper, and the `group-[&.scrolled]/landing:*`
+// utilities below react to it.
+const isSearchOpen = useSearchOpen()
+const isMobileOpen = useMobileNavOpen()
 
+// Displays "⌘" on Mac and "ctrl" everywhere else (see app/composables/platform.ts).
+const metaKey = useMetaKey()
 </script>
 
 <template>
-  <div class="group/nav fixed inset-x-0 top-0 z-50 mx-auto max-w-[calc(100%_-_40px)] group-[&.scrolled]/landing:mt-2 group-[&:not(.scrolled)]/landing:mt-4 motion-safe:transition-all motion-safe:duration-200 lg:max-w-7xl">
-    <div class="group-[&.scrolled]/landing:dark:bg-muted-950/95 group-[&.scrolled]/landing:border-muted-200 group-[&.scrolled]/landing:dark:border-muted-700 group-[&.scrolled]/landing:motion-safe:shadow-muted-300/30 group-[&.scrolled]/landing:motion-safe:dark:shadow-muted-800/20 flex items-center justify-between rounded-2xl border p-4 group-[&:not(.scrolled)]/landing:border-transparent group-[&.scrolled]/landing:bg-white/95 motion-safe:transition-all motion-safe:duration-200 group-[&.scrolled]/landing:motion-safe:shadow-xl">
+  <div
+    class="group/nav fixed inset-x-0 top-0 z-50 mx-auto max-w-[calc(100%_-_40px)] group-[&.scrolled]/landing:mt-2 group-[&:not(.scrolled)]/landing:mt-4 motion-safe:transition-all motion-safe:duration-200 lg:max-w-7xl"
+  >
+    <div
+      class="group-[&.scrolled]/landing:dark:bg-muted-950/95 group-[&.scrolled]/landing:border-muted-200 group-[&.scrolled]/landing:dark:border-muted-700 group-[&.scrolled]/landing:motion-safe:shadow-muted-300/30 group-[&.scrolled]/landing:motion-safe:dark:shadow-muted-800/20 flex items-center justify-between rounded-2xl border p-4 group-[&:not(.scrolled)]/landing:border-transparent group-[&.scrolled]/landing:bg-white/95 motion-safe:transition-all motion-safe:duration-200 group-[&.scrolled]/landing:motion-safe:shadow-xl"
+    >
+      <!-- Left: logo -->
       <div class="flex w-1/2 items-center gap-2 md:w-1/5">
         <NuxtLink
           to="/"
           class="ms-2 inline-flex"
-          aria-label="Go to Tairo homepage"
+          aria-label="Go to homepage"
         >
-          <tairo-logo-text class="text-primary-500 group-[&.scrolled]/landing:h-6 group-[&:not(.scrolled)]/landing:h-7 motion-safe:transition-all motion-safe:duration-200"/>
+          <TairoLogoText
+            class="text-primary-500 group-[&.scrolled]/landing:h-6 group-[&:not(.scrolled)]/landing:h-7 motion-safe:transition-all motion-safe:duration-200"
+          />
         </NuxtLink>
       </div>
-      <div class="hidden dark:bg-muted-950 fixed inset-x-0 top-20 mx-auto w-[calc(100%_-_2rem)] items-center justify-center bg-white lg:static lg:mx-0 lg:flex lg:w-auto lg:flex-row lg:bg-transparent!">
+
+      <!-- Center: desktop menu + search (hidden on mobile, see LandingMobileNav) -->
+      <div
+        class="hidden dark:bg-muted-950 fixed inset-x-0 top-20 mx-auto w-[calc(100%_-_2rem)] items-center justify-center bg-white lg:static lg:mx-0 lg:flex lg:w-auto lg:flex-row lg:bg-transparent!"
+      >
         <TairoMenu>
           <TairoMenuList class="flex-col lg:flex-row">
             <TairoMenuItem>
@@ -37,7 +52,7 @@
             </TairoMenuItem>
           </TairoMenuList>
         </TairoMenu>
-        <!-- Search Toggle bar-->
+
         <div class="px-6">
           <button
             type="button"
@@ -58,8 +73,9 @@
             </span>
           </button>
         </div>
-        <!-- Search Toggle bar-->        
       </div>
+
+      <!-- Right: theme toggle + mobile hamburger -->
       <div class="flex w-1/2 items-center justify-end gap-4 md:w-1/5">
         <BaseThemeToggleCustom aria-label="Toggle darkmode" />
         <button
@@ -68,14 +84,14 @@
           :aria-label="isMobileOpen ? 'Close menu' : 'Open menu'"
           @click="isMobileOpen = !isMobileOpen"
         >
+          <!-- Three bars that animate into an arrow-like shape when open -->
           <div class="space-y-1.5">
             <span
               class="bg-primary-600 block h-0.5 motion-safe:transition-all motion-safe:duration-300"
               :class="isMobileOpen ? 'w-2' : 'w-6'"
             />
             <span
-              class="bg-primary-600 block h-0.5 motion-safe:transition-all motion-safe:duration-300"
-              :class="isMobileOpen ? 'w-6' : 'w-6'"
+              class="bg-primary-600 block h-0.5 w-6 motion-safe:transition-all motion-safe:duration-300"
             />
             <span
               class="bg-primary-600 block h-0.5 motion-safe:transition-all motion-safe:duration-300"
