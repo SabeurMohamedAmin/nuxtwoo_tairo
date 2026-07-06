@@ -7,11 +7,15 @@ export interface Product {
   brand: string
   title: string
   price: number
+  /** Short 1–2 line marketing copy shown under the price on the PDP. */
+  description?: string
   image: string
   /** Optional extra gallery images for the PDP. */
   gallery?: string[]
   colours?: string[]
   sizes?: string[]
+  /** Sizes currently out of stock, rendered as disabled on the PDP. */
+  unavailableSizes?: string[]
 }
 
 export interface CartItem {
