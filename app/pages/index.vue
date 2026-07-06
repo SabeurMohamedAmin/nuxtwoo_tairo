@@ -1,24 +1,24 @@
 <script lang="ts" setup>
+// The CITADIUM storefront uses a custom announcement bar + header, so we use
+// the `empty` layout and compose the full-width sections ourselves.
 definePageMeta({
-  layout: 'landing',
+  layout: 'empty',
 })
 
-useHead({
-  title: 'Home',
-})
+useHead({ title: 'CITADIUM – Streetwear & Sneakers' })
 </script>
 
 <template>
-  <!--
-    The home page is composed of small, focused section components.
-    Each section lives in `app/components/home` so it stays easy to read
-    and maintain. Update or reorder sections here without touching layout.
-  -->
-  <div class="flex flex-col">
-    <HomeHero />
-    <HomeCategories />
-    <HomeFeaturedProducts />
-    <HomePromoBanner />
-    <HomeNewsletter />
+  <div class="bg-white text-black">
+    <HomeAnnouncementBar />
+    <HomeHeader />
+
+    <main>
+      <HomeHero />
+      <HomeCategoryGrid />
+      <HomeSneakerRail />
+      <HomeEditorialBanners />
+      <HomeNewsletter />
+    </main>
   </div>
 </template>
