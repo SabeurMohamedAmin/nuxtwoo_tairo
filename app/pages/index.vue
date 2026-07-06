@@ -12,7 +12,6 @@ useHead({ title: 'CITADIUM – Streetwear & Sneakers' })
   <div class="bg-white text-black">
     <HomeAnnouncementBar />
     <HomeHeader />
-
     <main>
       <HomeHero />
       <HomeCategoryGrid />

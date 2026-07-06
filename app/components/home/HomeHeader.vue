@@ -34,13 +34,13 @@ const isMobileOpen = ref(false)
 
 <template>
   <header
-    class="sticky top-0 z-50 mx-auto w-full motion-safe:transition-all motion-safe:duration-200"
-    :class="isScrolled ? 'mt-2 max-w-[calc(100%_-_40px)] lg:max-w-7xl' : ''"
+    class="sticky z-50 mx-auto w-full motion-safe:transition-all motion-safe:duration-200"
+    :class="isScrolled ? 'top-2 max-w-[calc(100%_-_10px)] lg:max-w-7xl mt-4' : 'top-0'"
   >
     <div
       class="motion-safe:transition-all motion-safe:duration-200"
       :class="isScrolled
-        ? 'rounded-2xl border border-gray-200 bg-white/95 shadow-xl shadow-gray-300/30 backdrop-blur'
+        ? 'rounded-2xl border border-gray-200 bg-white/95 shadow-md shadow-gray-300/30 backdrop-blur'
         : 'border-b border-gray-200 bg-white'"
     >
       <div class="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-4 py-4">
