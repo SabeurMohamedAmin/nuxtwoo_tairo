@@ -1,16 +1,24 @@
 <script lang="ts" setup>
 definePageMeta({
-  layout: 'default',
+  layout: 'landing',
+})
+
+useHead({
+  title: 'Home',
 })
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
-    <BaseHeading as="h1" size="2xl" weight="bold" class="text-muted-800 dark:text-white">
-      Home
-    </BaseHeading>
-    <BaseParagraph class="text-muted-500">
-      Welcome to your Tairo home page.
-    </BaseParagraph>
+  <!--
+    The home page is composed of small, focused section components.
+    Each section lives in `app/components/home` so it stays easy to read
+    and maintain. Update or reorder sections here without touching layout.
+  -->
+  <div class="flex flex-col">
+    <HomeHero />
+    <HomeCategories />
+    <HomeFeaturedProducts />
+    <HomePromoBanner />
+    <HomeNewsletter />
   </div>
 </template>
