@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { findProduct, products } from '~/utils/products'
+import { colourSwatches, findProduct, products } from '~/utils/products'
 
 definePageMeta({
   layout: 'empty',
@@ -18,9 +18,14 @@ useHead({ title: () => `${product.value?.title} – CITADIUM` })
 
 const { addItem } = useCart()
 
-// Local variant selection.
+// A size is selectable unless the product flags it as out of stock.
+function isSizeAvailable(size: string) {
+  return !product.value?.unavailableSizes?.includes(size)
+}
+
+// Local variant selection. The default size skips out-of-stock entries.
 const selectedColour = ref(product.value.colours?.[0] ?? 'Default')
-const selectedSize = ref(product.value.sizes?.[0] ?? 'One Size')
+const selectedSize = ref(product.value.sizes?.find(isSizeAvailable) ?? 'One Size')
 const activeImage = ref(product.value.gallery?.[0] ?? product.value.image)
 
 const gallery = computed(() => product.value?.gallery ?? [product.value!.image])
@@ -39,9 +44,9 @@ const recommendations = computed(() =>
 
 // Info accordion rows.
 const infoRows = [
-  { icon: 'lucide:truck', title: 'Delivery', text: 'Free standard delivery on orders over €50. Delivered in 2–4 working days.' },
-  { icon: 'lucide:store', title: 'Click & Collect', text: 'Collect from your nearest CITADIUM store within 24 hours.' },
-  { icon: 'lucide:rotate-ccw', title: 'Returns', text: 'Free returns within 30 days. Items must be unworn with tags attached.' },
+  { icon: 'lucide:truck', title: 'Delivery', text: 'Free from €80. Delivered in 2–4 working days.' },
+  { icon: 'lucide:store', title: 'Click & Collect', text: 'Pick up in store for free.' },
+  { icon: 'lucide:rotate-ccw', title: 'Returns', text: '30 days to change your mind.' },
 ]
 
 const toaster = useNuiToasts()
@@ -56,7 +61,7 @@ function addToBag() {
 </script>
 
 <template>
-  <div v-if="product" class="bg-white text-black">
+  <div class="bg-white text-black">
     <HomeAnnouncementBar />
     <HomeHeader />
 
@@ -64,9 +69,8 @@ function addToBag() {
       <ShopBreadcrumb :crumbs="breadcrumb" />
 
       <div class="mt-6 grid gap-10 lg:grid-cols-2">
-        <!-- Gallery -->
+        <!-- Gallery: vertical thumbnail rail + large primary image -->
         <div class="flex gap-4">
-          <!-- Vertical thumbnail strip -->
           <div class="flex flex-col gap-3">
             <button
               v-for="(image, index) in gallery"
@@ -79,13 +83,13 @@ function addToBag() {
               <NuxtImg :src="image" :alt="`${product.title} view ${index + 1}`" class="h-full w-full object-cover" loading="lazy" />
             </button>
           </div>
-          <!-- Main image -->
+
           <div class="aspect-square flex-1 overflow-hidden bg-gray-100">
             <NuxtImg :src="activeImage" :alt="product.title" class="h-full w-full object-cover" loading="eager" />
           </div>
         </div>
 
-        <!-- Buy box -->
+        <!-- Product info panel -->
         <div class="flex flex-col gap-6">
           <div class="flex flex-col gap-2">
             <span class="text-sm font-bold uppercase tracking-wide text-gray-500">
@@ -97,29 +101,33 @@ function addToBag() {
             <span class="text-2xl font-bold">
               {{ formatPrice(product.price) }}
             </span>
+            <p v-if="product.description" class="text-sm leading-relaxed text-gray-600">
+              {{ product.description }}
+            </p>
           </div>
 
-          <!-- Colour swatches -->
-          <div v-if="product.colours?.length" class="flex flex-col gap-2">
+          <!-- Colour swatches: circular dots, ringed when active -->
+          <div class="flex flex-col gap-3">
             <span class="text-xs font-bold uppercase tracking-wide">
-              Colour: {{ selectedColour }}
+              Colour: <span class="font-medium normal-case text-gray-600">{{ selectedColour }}</span>
             </span>
-            <div class="flex gap-2">
+            <div class="flex items-center gap-3">
               <button
                 v-for="colour in product.colours"
                 :key="colour"
                 type="button"
-                class="border px-4 py-2 text-xs font-medium"
-                :class="selectedColour === colour ? 'border-black bg-black text-white' : 'border-gray-300 hover:border-black'"
+                class="size-7 rounded-full border border-gray-300"
+                :class="selectedColour === colour ? 'ring-2 ring-black ring-offset-2' : 'hover:ring-1 hover:ring-gray-400 hover:ring-offset-2'"
+                :style="{ backgroundColor: colourSwatches[colour] ?? '#e5e7eb' }"
+                :aria-label="`Select colour ${colour}`"
+                :aria-pressed="selectedColour === colour"
                 @click="selectedColour = colour"
-              >
-                {{ colour }}
-              </button>
+              />
             </div>
           </div>
 
-          <!-- Size grid -->
-          <div v-if="product.sizes?.length" class="flex flex-col gap-2">
+          <!-- Size grid with disabled out-of-stock entries -->
+          <div class="flex flex-col gap-2">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold uppercase tracking-wide">Size</span>
               <NuxtLink to="/products" class="text-xs text-gray-500 underline hover:text-black">
@@ -132,7 +140,11 @@ function addToBag() {
                 :key="size"
                 type="button"
                 class="border py-2 text-xs font-medium"
-                :class="selectedSize === size ? 'border-black bg-black text-white' : 'border-gray-300 hover:border-black'"
+                :class="[
+                  selectedSize === size ? 'border-black bg-black text-white' : 'border-gray-300 hover:border-black',
+                  !isSizeAvailable(size) && 'cursor-not-allowed border-gray-200 text-gray-300 line-through hover:border-gray-200',
+                ]"
+                :disabled="!isSizeAvailable(size)"
                 @click="selectedSize = size"
               >
                 {{ size }}
@@ -140,25 +152,33 @@ function addToBag() {
             </div>
           </div>
 
-          <!-- CTAs -->
-          <div class="flex gap-3">
+          <!-- Purchase actions -->
+          <div class="flex flex-col gap-3">
+            <div class="flex gap-3">
+              <button
+                type="button"
+                class="flex-1 bg-red-600 py-4 text-sm font-bold uppercase tracking-wide text-white hover:bg-red-700"
+                @click="addToBag"
+              >
+                Add to bag
+              </button>
+              <button
+                type="button"
+                class="flex size-14 items-center justify-center border border-black hover:bg-black hover:text-white"
+                aria-label="Add to wishlist"
+              >
+                <Icon name="lucide:heart" class="size-5" />
+              </button>
+            </div>
             <button
               type="button"
-              class="flex-1 bg-red-600 py-4 text-sm font-bold uppercase tracking-wide text-white hover:bg-red-700"
-              @click="addToBag"
+              class="w-full border border-black py-4 text-sm font-bold uppercase tracking-wide hover:bg-black hover:text-white"
             >
-              Add to bag
-            </button>
-            <button
-              type="button"
-              class="flex size-14 items-center justify-center border border-black hover:bg-black hover:text-white"
-              aria-label="Add to wishlist"
-            >
-              <Icon name="lucide:heart" class="size-5" />
+              Check store availability
             </button>
           </div>
 
-          <!-- Info accordions -->
+          <!-- Trust / info accordion rows -->
           <div class="mt-2 divide-y divide-gray-200 border-y border-gray-200">
             <details v-for="row in infoRows" :key="row.title" class="py-4">
               <summary class="flex cursor-pointer items-center gap-3 text-sm font-bold uppercase tracking-wide">
