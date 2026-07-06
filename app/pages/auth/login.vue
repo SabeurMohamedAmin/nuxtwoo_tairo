@@ -1,51 +1,147 @@
 <script lang="ts" setup>
+import { toTypedSchema } from '@vee-validate/zod'
+import { Field, useForm } from 'vee-validate'
+import { z } from 'zod'
+
 definePageMeta({
   layout: 'empty',
 })
 
-const email = ref('')
-const password = ref('')
+useHead({ title: 'Sign in' })
 
-function onSubmit() {
-  // TODO: wire up authentication
+// Validation messages kept together for easy editing/translation.
+const VALIDATION_TEXT = {
+  EMAIL_REQUIRED: 'Enter a valid email address',
+  PASSWORD_REQUIRED: 'Your password can\'t be empty',
 }
+
+const zodSchema = z.object({
+  email: z.string().email(VALIDATION_TEXT.EMAIL_REQUIRED),
+  password: z.string().min(1, VALIDATION_TEXT.PASSWORD_REQUIRED),
+  rememberMe: z.boolean().optional(),
+})
+
+type FormInput = z.infer<typeof zodSchema>
+
+const validationSchema = toTypedSchema(zodSchema)
+const initialValues: FormInput = {
+  email: '',
+  password: '',
+  rememberMe: false,
+}
+
+const { handleSubmit, isSubmitting } = useForm({
+  validationSchema,
+  initialValues,
+})
+
+const toaster = useNuiToasts()
+
+const onSubmit = handleSubmit(async (_values) => {
+  // TODO: replace with real authentication (nuxt-auth-utils).
+  await new Promise(resolve => setTimeout(resolve, 1200))
+
+  toaster.add({
+    title: 'Welcome back!',
+    icon: 'ph:check',
+    progress: true,
+  })
+
+  await navigateTo('/')
+})
 </script>
 
 <template>
-  <div class="flex min-h-screen items-center justify-center p-4">
-    <BaseCard rounded="lg" class="w-full max-w-md p-8">
-      <div class="mb-6 text-center">
-        <BaseHeading as="h1" size="xl" weight="bold" class="text-muted-800 dark:text-white">
-          Sign in
-        </BaseHeading>
-        <BaseParagraph size="sm" class="text-muted-500">
-          Welcome back, please sign in to continue.
-        </BaseParagraph>
-      </div>
-
-      <form class="flex flex-col gap-4" @submit.prevent="onSubmit">
-        <BaseField label="Email">
+  <AuthCard
+    eyebrow="Welcome back"
+    title="Sign in to your account"
+    subtitle="Enter your credentials to access your account."
+  >
+    <form novalidate class="flex flex-col gap-4" @submit.prevent="onSubmit">
+      <Field v-slot="{ field, errorMessage, handleChange, handleBlur }" name="email">
+        <BaseField
+          v-slot="{ inputAttrs, inputRef }"
+          label="Email address"
+          :state="errorMessage ? 'error' : 'idle'"
+          :error="errorMessage"
+          :disabled="isSubmitting"
+          required
+        >
           <BaseInput
-            v-model="email"
+            :ref="inputRef"
+            v-bind="inputAttrs"
             type="email"
             placeholder="you@example.com"
             autocomplete="email"
+            rounded="lg"
+            :model-value="field.value"
+            :error="errorMessage"
+            :disabled="isSubmitting"
+            @update:model-value="handleChange"
+            @blur="handleBlur"
           />
         </BaseField>
+      </Field>
 
-        <BaseField label="Password">
+      <Field v-slot="{ field, errorMessage, handleChange, handleBlur }" name="password">
+        <BaseField
+          v-slot="{ inputAttrs, inputRef }"
+          label="Password"
+          :state="errorMessage ? 'error' : 'idle'"
+          :error="errorMessage"
+          :disabled="isSubmitting"
+          required
+        >
           <BaseInput
-            v-model="password"
+            :ref="inputRef"
+            v-bind="inputAttrs"
             type="password"
             placeholder="••••••••"
             autocomplete="current-password"
+            rounded="lg"
+            :model-value="field.value"
+            :error="errorMessage"
+            :disabled="isSubmitting"
+            @update:model-value="handleChange"
+            @blur="handleBlur"
           />
         </BaseField>
+      </Field>
 
-        <BaseButton type="submit" variant="primary" class="w-full">
-          Sign in
-        </BaseButton>
-      </form>
-    </BaseCard>
-  </div>
+      <div class="flex items-center justify-between">
+        <Field v-slot="{ field, handleChange }" name="rememberMe">
+          <BaseCheckbox
+            :model-value="field.value"
+            label="Remember me"
+            :disabled="isSubmitting"
+            @update:model-value="handleChange"
+          />
+        </Field>
+        <NuxtLink
+          to="/auth/forgot-password"
+          class="text-primary-500 text-sm font-medium hover:underline"
+        >
+          Forgot password?
+        </NuxtLink>
+      </div>
+
+      <BaseButton
+        type="submit"
+        color="primary"
+        rounded="lg"
+        class="w-full"
+        :loading="isSubmitting"
+        :disabled="isSubmitting"
+      >
+        Sign in
+      </BaseButton>
+
+      <BaseParagraph size="sm" class="text-muted-500 text-center">
+        Don't have an account?
+        <NuxtLink to="/auth/register" class="text-primary-500 font-medium hover:underline">
+          Create one
+        </NuxtLink>
+      </BaseParagraph>
+    </form>
+  </AuthCard>
 </template>
