@@ -7,23 +7,18 @@ interface NavLink {
 }
 
 const navLinks: NavLink[] = [
-  { label: 'New In', to: '/' },
-  { label: 'Men', to: '/' },
-  { label: 'Women', to: '/' },
-  { label: 'Kids', to: '/' },
-  { label: 'Sneakers', to: '/' },
-  { label: 'Brands', to: '/' },
-  { label: 'Life/Culture', to: '/' },
-  { label: 'Sale', to: '/', highlight: true },
+  { label: 'New In', to: '/products' },
+  { label: 'Men', to: '/products' },
+  { label: 'Women', to: '/products' },
+  { label: 'Kids', to: '/products' },
+  { label: 'Sneakers', to: '/products' },
+  { label: 'Brands', to: '/products' },
+  { label: 'Life/Culture', to: '/products' },
+  { label: 'Sale', to: '/products', highlight: true },
 ]
 
-// Right-aligned action icons.
-const actions = [
-  { icon: 'lucide:search', label: 'Search' },
-  { icon: 'lucide:user', label: 'Account' },
-  { icon: 'lucide:heart', label: 'Wishlist' },
-  { icon: 'lucide:shopping-bag', label: 'Cart' },
-]
+// Live cart count for the bag badge.
+const { count } = useCart()
 </script>
 
 <template>
@@ -57,14 +52,35 @@ const actions = [
       <!-- Action icons -->
       <div class="flex items-center gap-5">
         <button
-          v-for="action in actions"
-          :key="action.label"
           type="button"
           class="text-black hover:opacity-70"
-          :aria-label="action.label"
+          aria-label="Search"
         >
-          <Icon :name="action.icon" class="size-5" />
+          <Icon name="lucide:search" class="size-5" />
         </button>
+
+        <NuxtLink to="/auth/login" class="text-black hover:opacity-70" aria-label="Account">
+          <Icon name="lucide:user" class="size-5" />
+        </NuxtLink>
+
+        <button
+          type="button"
+          class="text-black hover:opacity-70"
+          aria-label="Wishlist"
+        >
+          <Icon name="lucide:heart" class="size-5" />
+        </button>
+
+        <!-- Cart with live count badge -->
+        <NuxtLink to="/cart" class="relative text-black hover:opacity-70" aria-label="Cart">
+          <Icon name="lucide:shopping-bag" class="size-5" />
+          <span
+            v-if="count > 0"
+            class="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-red-600 text-[10px] font-bold text-white"
+          >
+            {{ count }}
+          </span>
+        </NuxtLink>
       </div>
     </div>
   </header>
