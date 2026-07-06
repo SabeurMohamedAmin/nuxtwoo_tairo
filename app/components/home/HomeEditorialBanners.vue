@@ -39,7 +39,14 @@ const banners: Banner[] = [
 <template>
   <section class="py-12">
     <div class="mx-auto w-full max-w-7xl px-4">
-      <div class="grid gap-4 md:grid-cols-3">
+      <TairoContentWrapper>
+        <template #left>
+          <BaseHeading as="h2" size="2xl" weight="bold" class="uppercase tracking-tight">
+            Editorial
+          </BaseHeading>
+        </template>
+
+        <div class="grid gap-4 md:grid-cols-3">
         <article
           v-for="banner in banners"
           :key="banner.id"
@@ -56,9 +63,9 @@ const banners: Banner[] = [
             <BaseHeading as="h3" size="2xl" weight="bold" class="uppercase leading-tight tracking-tight text-white">
               {{ banner.title }}
             </BaseHeading>
-            <BaseParagraph size="sm" class="text-white/80">
+            <BaseText size="sm" class="text-white/80">
               {{ banner.subtitle }}
-            </BaseParagraph>
+            </BaseText>
             <BaseButton
               :to="banner.to"
               rounded="none"
@@ -70,7 +77,8 @@ const banners: Banner[] = [
             </BaseButton>
           </div>
         </article>
-      </div>
+        </div>
+      </TairoContentWrapper>
     </div>
   </section>
 </template>
