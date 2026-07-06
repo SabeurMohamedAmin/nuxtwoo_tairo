@@ -32,10 +32,10 @@ function formatPrice(value: number) {
     <div class="mx-auto w-full max-w-7xl px-4">
       <!-- Section header -->
       <div class="mb-6 flex items-center justify-between">
-        <h2 class="text-2xl font-black uppercase tracking-tight">
+        <BaseHeading as="h2" size="2xl" weight="bold" class="uppercase tracking-tight">
           Sneaker Rail
-        </h2>
-        <NuxtLink to="/" class="text-xs font-bold uppercase tracking-wide hover:opacity-70">
+        </BaseHeading>
+        <NuxtLink to="/products" class="text-xs font-bold uppercase tracking-wide hover:opacity-70">
           View all
         </NuxtLink>
       </div>
@@ -59,24 +59,24 @@ function formatPrice(value: number) {
                 loading="lazy"
               />
             </div>
-            <p class="mt-3 text-xs font-bold uppercase tracking-wide">
+            <BaseParagraph size="xs" weight="bold" class="mt-3 uppercase tracking-wide">
               {{ sneaker.name }}
-            </p>
-            <p class="mt-1 text-xs text-gray-600">
+            </BaseParagraph>
+            <BaseParagraph size="xs" class="mt-1 text-gray-600">
               {{ formatPrice(sneaker.price) }}
-            </p>
+            </BaseParagraph>
           </div>
         </div>
 
         <!-- Next arrow -->
-        <button
-          type="button"
-          class="absolute -right-3 top-1/3 flex size-11 items-center justify-center rounded-full bg-black text-white shadow-lg hover:bg-gray-800"
+        <BaseButton
+          rounded="full"
+          class="absolute -right-3 top-1/3 size-11 bg-black! text-white! shadow-lg hover:bg-gray-800!"
           aria-label="Next products"
           @click="scrollNext"
         >
           <Icon name="lucide:arrow-right" class="size-5" />
-        </button>
+        </BaseButton>
       </div>
     </div>
   </section>
