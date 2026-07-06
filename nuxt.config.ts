@@ -22,7 +22,9 @@ export default defineNuxtConfig({
   ],
   fonts: {
     experimental: {
-      processCSSVariables: true, 
+      // Disabled: parsing CSS variables makes @nuxt/fonts misread computed
+      // values like calc(...) as font-family names, which breaks the build.
+      processCSSVariables: false,
     },
   },
   // VUE i18n Translation
